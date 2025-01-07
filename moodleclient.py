@@ -4,6 +4,7 @@ import urllib
 from random import randint
 from convert import main as convert
 import asyncio
+import os
 
 #proxy = "socks5://172.104.209.44:1080"
 
