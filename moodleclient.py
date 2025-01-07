@@ -13,7 +13,7 @@ import asyncio
 #}
 
 def upload_token(filename):
-  token = "f39882ea7dce6244814e8a70a120511a"
+  token = os.getenv("TOKEN")
   host = "https://aulavirtual.upec.cu"
   s = requests.session()
   data = {
