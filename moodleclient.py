@@ -2,11 +2,19 @@ import requests
 import json
 import urllib
 from random import randint
-import os
+from convert import main as convert
+import asyncio
+
+#proxy = "socks5://172.104.209.44:1080"
+
+#proxies = {
+#  'http': proxy,
+#  'https': proxy
+#}
 
 def upload_token(filename):
-  token = os.getenv("TOKEN")
-  host = "https://cursad.jovenclub.cu"
+  token = "f39882ea7dce6244814e8a70a120511a"
+  host = "https://aulavirtual.upec.cu"
   s = requests.session()
   data = {
     "token": token,
@@ -19,5 +27,8 @@ def upload_token(filename):
   resp = s.post(f"{host}/webservice/upload.php", data=data, files=files)
   resp = json.loads(resp.text)[0]
   contextid, itemid, filename = resp["contextid"], resp["itemid"], resp["filename"]
-  url = f"{host}/webservice/draftfile.php/{contextid}/user/draft/{itemid}/{urllib.parse.quote(filename)}?token={token}"
-  return url
+  url = f"{host}/draftfile.php/{contextid}/user/draft/{itemid}/{urllib.parse.quote(filename)}"
+  newurl = asyncio.run(convert(url))
+  newurl = str(newurl).replace("pluginfile.php", "webservice/pluginfile.php").replace("'", "").replace("[", "").replace("]", "")
+  newurl = str(newurl) + "?token=" + token
+  return newurl
