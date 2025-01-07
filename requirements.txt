@@ -1,2 +1,4 @@
 requests
 deltabot-cli
+aiohttp
+bs4
