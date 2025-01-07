@@ -4,6 +4,7 @@ import json
 from bs4 import BeautifulSoup
 import re
 import asyncio
+import os
 
 async def send_calendar(moodle: str, user: str, passw: str, urls: list) -> list:
     async with aiohttp.ClientSession() as session:
@@ -61,8 +62,8 @@ async def send_calendar(moodle: str, user: str, passw: str, urls: list) -> list:
 
 async def main(url):
   moodle = "https://aulavirtual.upec.cu"
-  user = "usuario"
-  passw = "contraseña"
+  user = os.getenv("USER")
+  passw = os.getenv("PASSW")
   urls = [url]
   client = await send_calendar(moodle,user,passw,urls)
   return client
